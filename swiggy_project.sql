@@ -8695,3 +8695,84 @@ INSERT INTO swiggy_data VALUES (465835, 'Rohini', 'Delhi', 'Jay Mata Ji Home Kit
 INSERT INTO swiggy_data VALUES (465872, 'Rohini', 'Delhi', 'Chinese Kitchen King', 150.0, 2.9, 80, 'Chinese,Snacks,Tandoor', 'Rohini', 58);
 INSERT INTO swiggy_data VALUES (465990, 'Rohini', 'Delhi', 'Shree Ram Paratha Wala', 150.0, 2.9, 80, 'North Indian,Indian,Snacks', 'Rohini', 28);
 INSERT INTO swiggy_data VALUES (466488, 'Navrangpura', 'Ahmedabad', 'Sassy Street', 250.0, 2.9, 80, 'Chaat,Snacks,Chinese', 'Navrangpura', 44);
+
+use swiggy_data;
+SELECT * FROM swiggy_data;
+
+# 1. Find total number of restaurants
+
+SELECT COUNT(*) AS total_restaurants
+FROM swiggy_data;
+
+# 2. Get distinct cities and restaurant counts
+
+SELECT City, COUNT(*) AS restaurant_count
+FROM swiggy_data
+GROUP BY City
+ORDER BY restaurant_count DESC;
+
+# 3. Find top 5 highest-rated restaurants
+
+SELECT Restaurant, City, Avg_ratings
+FROM swiggy_data
+ORDER BY Avg_ratings DESC
+LIMIT 5;
+
+# 4. Average delivery time per area
+
+SELECT Area, ROUND(AVG(Delivery_time), 2) AS avg_delivery_time
+FROM swiggy_data
+GROUP BY Area
+ORDER BY avg_delivery_time ASC;
+
+# 5. Find restaurants with ratings above 4.0
+
+SELECT Restaurant, City, Avg_ratings
+FROM swiggy_data
+WHERE Avg_ratings > 4.0
+ORDER BY Avg_ratings DESC;
+
+# 6 .Average cost for two by city # This query shows the average price (cost for 2 people) in each city and ranks the cities from most expensive to least expensive
+
+SELECT City, ROUND(AVG(Price), 2) AS avg_cost_for_two # cost for 2 person
+FROM swiggy_data
+GROUP BY City
+ORDER BY avg_cost_for_two DESC;
+
+# 7. Most common cuisine types
+
+SELECT Food_type, COUNT(*) AS frequency
+FROM swiggy_data
+GROUP BY Food_type
+ORDER BY frequency DESC
+LIMIT 10;
+
+# 8. Find restaurants with highest total ratings (popularity)
+
+SELECT Restaurant, City, Total_ratings
+FROM swiggy_data
+ORDER BY Total_ratings DESC
+LIMIT 10;
+
+# 9. Find all restaurants in a specific city (e.g., Mumbai)
+
+SELECT Restaurant, Food_type, Avg_ratings, Price
+FROM swiggy_data
+WHERE City = 'Mumbai';
+
+# 10. Find areas that have more than 3 restaurants listed
+
+SELECT Area, COUNT(Restaurant) AS total_restaurants
+FROM swiggy_data
+GROUP BY Area
+HAVING COUNT(Restaurant) > 3
+ORDER BY total_restaurants DESC;
+
+
+
+
+
+
+
+
+
